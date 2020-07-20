@@ -13,6 +13,29 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _people = 0;
+  // ignore: non_constant_identifier_names
+  String info_Text = "Pode entrar";
+  int _max = 10;
+
+  void _changePeople(int delta) {
+    setState(() {
+      _people += delta;
+
+      if (_people <= 0) {
+        _people = 0;
+        info_Text = "O estabelecimento está vazio";
+      } else {
+        info_Text = 'Pode entrar';
+      }
+
+      if (_people >= _max) {
+        _people = _max;
+        info_Text = "Lotado";
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +57,7 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               Center(
                 child: Text(
-                  "Pessoas: 0",
+                  "Pessoas: $_people",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -54,7 +77,7 @@ class _HomeState extends State<Home> {
                               TextStyle(fontSize: 40, color: Colors.deepPurple),
                         ),
                         onPressed: () {
-                          debugPrint('+1');
+                          _changePeople(1);
                         },
                       ),
                     ),
@@ -67,7 +90,7 @@ class _HomeState extends State<Home> {
                             TextStyle(fontSize: 40, color: Colors.deepPurple),
                       ),
                       onPressed: () {
-                        debugPrint('-1');
+                        _changePeople(-1);
                       },
                     ),
                   ),
@@ -75,7 +98,7 @@ class _HomeState extends State<Home> {
               ),
               Center(
                 child: Text(
-                  "Pode entrar",
+                  info_Text,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
